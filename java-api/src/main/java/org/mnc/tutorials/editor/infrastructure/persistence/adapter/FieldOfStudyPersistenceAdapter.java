@@ -31,14 +31,8 @@ public class FieldOfStudyPersistenceAdapter implements FieldOfStudyRepository {
     }
 
     @Override
-    public FieldOfStudy save(FieldOfStudy fieldOfStudy, UUID performedBy) {
-        FieldOfStudyEntity entity ;
-        if(fieldOfStudy.getId() == null){
-            entity = fieldOfStudyMapper.fromDomain(performedBy,fieldOfStudy);
-        } else{
-            entity = fieldOfStudyMapper.toEntity(fieldOfStudy);
-        }
-        entity = jpaFieldOfStudyRepository.save(entity);
+    public FieldOfStudy save(FieldOfStudy fieldOfStudy) {
+        FieldOfStudyEntity entity = jpaFieldOfStudyRepository.save(fieldOfStudyMapper.fromDomain(fieldOfStudy));
         return fieldOfStudyMapper.toDomain(entity);
     }
 

@@ -1,10 +1,11 @@
-package org.mnc.tutorials.editor.application.usecase;
+package org.mnc.tutorials.editor.application.usecase.field;
 
 import org.mnc.tutorials.editor.application.utils.NotFoundException;
 import org.mnc.tutorials.editor.domain.model.FieldOfStudy;
 import org.mnc.tutorials.editor.domain.repository.FieldOfStudyRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -24,6 +25,8 @@ public class ApproveFieldOfStudyUseCase {
         }
 
         field.setApproved(true);
-        repository.save(field, adminId);
+        field.setLastModificationBy(adminId);
+        field.setLastModificationAt(LocalDateTime.now());
+        repository.save(field);
     }
 }

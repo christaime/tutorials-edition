@@ -1,7 +1,6 @@
-package org.mnc.tutorials.editor.application.usecase;
+package org.mnc.tutorials.editor.application.usecase.field;
 
 import org.mnc.tutorials.editor.application.utils.NotFoundException;
-import org.mnc.tutorials.editor.domain.model.FieldOfStudy;
 import org.mnc.tutorials.editor.domain.repository.FieldOfStudyRepository;
 import org.springframework.stereotype.Service;
 

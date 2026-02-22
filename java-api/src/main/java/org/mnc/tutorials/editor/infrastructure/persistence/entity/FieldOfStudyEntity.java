@@ -28,6 +28,13 @@ public class FieldOfStudyEntity extends BaseEntity {
         this.approved = approved;
     }
 
+    public FieldOfStudyEntity(String name, String description, boolean approved) {
+        super();
+        this.name = name;
+        this.description = description;
+        this.approved = approved;
+    }
+
     public String getName() {
         return name;
     }

@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.mnc.tutorials.editor.application.dto.FieldOfStudyDto;
 import org.mnc.tutorials.editor.application.dto.PageResult;
 import org.mnc.tutorials.editor.application.mapper.FieldOfStudyDtoMapper;
-import org.mnc.tutorials.editor.application.usecase.*;
+import org.mnc.tutorials.editor.application.usecase.field.*;
 import org.mnc.tutorials.editor.domain.repository.FieldOfStudyCriteria;
 import org.mnc.tutorials.editor.domain.repository.SortCriteria;
 import org.springframework.http.HttpStatus;

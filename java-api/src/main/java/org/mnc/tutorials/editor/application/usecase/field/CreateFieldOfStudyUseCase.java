@@ -1,9 +1,8 @@
-package org.mnc.tutorials.editor.application.usecase;
+package org.mnc.tutorials.editor.application.usecase.field;
 
 import org.mnc.tutorials.editor.application.dto.FieldOfStudyDto;
 import org.mnc.tutorials.editor.application.utils.AlreadyExistsException;
 import org.mnc.tutorials.editor.domain.model.FieldOfStudy;
-import org.mnc.tutorials.editor.domain.repository.FieldOfStudyCriteria;
 import org.mnc.tutorials.editor.domain.repository.FieldOfStudyRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +22,8 @@ public class CreateFieldOfStudyUseCase {
                 .ifPresent(f -> { throw new AlreadyExistsException("Field of study already exists"); });
 
         FieldOfStudy field = new FieldOfStudy(creatorId, dto.name(), dto.description(), false);
-        return repository.save(field, creatorId);
+        field.setLastModificationBy(creatorId);
+        field.setLastModificationAt(field.getCreatedAt());
+        return repository.save(field);
     }
 }

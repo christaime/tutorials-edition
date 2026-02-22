@@ -1,4 +1,4 @@
-package org.mnc.tutorials.editor.application.usecase;
+package org.mnc.tutorials.editor.application.usecase.field;
 
 import org.mnc.tutorials.editor.domain.model.DomainPage;
 import org.mnc.tutorials.editor.domain.model.FieldOfStudy;

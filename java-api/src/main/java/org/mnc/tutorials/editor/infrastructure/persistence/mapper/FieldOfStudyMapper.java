@@ -34,6 +34,16 @@ public class FieldOfStudyMapper {
         return new FieldOfStudyEntity(domain.getName(), domain.getDescription(), domain.isApproved(), createdBy);
     }
 
+    public FieldOfStudyEntity fromDomain(FieldOfStudy domain){
+        FieldOfStudyEntity entity = new FieldOfStudyEntity(domain.getName(), domain.getDescription(), domain.isApproved());
+        entity.setId(domain.getId());
+        entity.setCreatedAt(domain.getCreatedAt());
+        entity.setCreatedBy(domain.getCreatedBy());
+        entity.setLastModificationAt(domain.getLastModificationAt());
+        entity.setLastModificationBy(domain.getLastModificationBy());
+        return entity;
+    }
+
     public void updateEntity(FieldOfStudyEntity entity,FieldOfStudy domain, UUID modifiedBy){
         entity.setName(domain.getName());
         entity.setDescription(domain.getDescription());

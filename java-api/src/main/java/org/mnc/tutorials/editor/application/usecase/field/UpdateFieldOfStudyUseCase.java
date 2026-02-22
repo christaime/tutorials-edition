@@ -1,11 +1,10 @@
-package org.mnc.tutorials.editor.application.usecase;
+package org.mnc.tutorials.editor.application.usecase.field;
 
 import org.mnc.tutorials.editor.application.dto.FieldOfStudyDto;
 import org.mnc.tutorials.editor.application.mapper.FieldOfStudyDtoMapper;
 import org.mnc.tutorials.editor.application.utils.NotFoundException;
 import org.mnc.tutorials.editor.domain.model.FieldOfStudy;
 import org.mnc.tutorials.editor.domain.repository.FieldOfStudyRepository;
-import org.mnc.tutorials.editor.infrastructure.persistence.mapper.FieldOfStudyMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -32,6 +31,6 @@ public class UpdateFieldOfStudyUseCase {
 
         fieldOfStudyDtoMapper.updateDomain(existing,dto,modifierId);
 
-        return repository.save(existing, modifierId);
+        return repository.save(existing);
     }
 }
