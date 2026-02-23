@@ -2,6 +2,7 @@ services:
 
   tutorialEdition_db:
     image: postgres:18-alpine
+    restart: unless-stopped
     container_name: postgresql_tutorial_edition
     environment:
       POSTGRES_DB: ${POSTGRES_DB}

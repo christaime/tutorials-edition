@@ -3,9 +3,7 @@ package org.mnc.tutorials.editor.application.mapper;
 import org.mnc.tutorials.editor.application.dto.FieldOfStudyDto;
 import org.mnc.tutorials.editor.application.dto.PageResult;
 import org.mnc.tutorials.editor.domain.model.DomainPage;
-import org.mnc.tutorials.editor.domain.model.FieldOfStudy;
-import org.mnc.tutorials.editor.infrastructure.persistence.entity.FieldOfStudyEntity;
-import org.springframework.data.domain.Page;
+import org.mnc.tutorials.editor.domain.model.tutorial.FieldOfStudy;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

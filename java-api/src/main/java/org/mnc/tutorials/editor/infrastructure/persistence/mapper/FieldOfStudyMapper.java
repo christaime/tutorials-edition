@@ -1,7 +1,7 @@
 package org.mnc.tutorials.editor.infrastructure.persistence.mapper;
 
 import org.mnc.tutorials.editor.domain.model.DomainPage;
-import org.mnc.tutorials.editor.domain.model.FieldOfStudy;
+import org.mnc.tutorials.editor.domain.model.tutorial.FieldOfStudy;
 import org.mnc.tutorials.editor.infrastructure.persistence.entity.FieldOfStudyEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;

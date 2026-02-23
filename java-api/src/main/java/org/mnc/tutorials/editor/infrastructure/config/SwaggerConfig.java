@@ -1,6 +1,5 @@
 package org.mnc.tutorials.editor.infrastructure.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,8 +18,8 @@ public class SwaggerConfig {
         .info(new Info()
             .title("Tutorial Editor API")
             .version("1.0.0")
-            .description("Rest Api de ")
-            .contact(new Contact().name("Tutorial Editor").email("support@baotec.com"))
+            .description("Rest Api de gestion d'édition de tutoriels")
+            .contact(new Contact().name("Tutorial Editor").email("support@gmail.com"))
             .license(new License().name("Proprietary"))
         )
         .components(new Components());

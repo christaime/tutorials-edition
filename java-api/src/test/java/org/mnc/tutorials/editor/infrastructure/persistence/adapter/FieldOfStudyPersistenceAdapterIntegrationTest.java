@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mnc.tutorials.editor.FlywayConfig;
-import org.mnc.tutorials.editor.domain.model.FieldOfStudy;
+import org.mnc.tutorials.editor.domain.model.tutorial.FieldOfStudy;
 import org.mnc.tutorials.editor.domain.repository.FieldOfStudyCriteria;
 import org.mnc.tutorials.editor.domain.repository.SortCriteria;
 import org.mnc.tutorials.editor.infrastructure.persistence.jpa.JpaFieldOfStudyRepository;
@@ -17,7 +17,6 @@ import org.springframework.boot.jdbc.test.autoconfigure.TestDatabaseAutoConfigur
 import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;

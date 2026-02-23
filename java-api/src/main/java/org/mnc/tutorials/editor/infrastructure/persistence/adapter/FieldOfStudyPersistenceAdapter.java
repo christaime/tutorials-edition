@@ -2,7 +2,7 @@ package org.mnc.tutorials.editor.infrastructure.persistence.adapter;
 
 import jakarta.persistence.criteria.Predicate;
 import org.mnc.tutorials.editor.domain.model.DomainPage;
-import org.mnc.tutorials.editor.domain.model.FieldOfStudy;
+import org.mnc.tutorials.editor.domain.model.tutorial.FieldOfStudy;
 import org.mnc.tutorials.editor.domain.repository.FieldOfStudyCriteria;
 import org.mnc.tutorials.editor.domain.repository.FieldOfStudyRepository;
 import org.mnc.tutorials.editor.infrastructure.persistence.entity.FieldOfStudyEntity;
@@ -51,11 +51,7 @@ public class FieldOfStudyPersistenceAdapter implements FieldOfStudyRepository {
     @Override
     public DomainPage<FieldOfStudy> findByCriteria(FieldOfStudyCriteria criteria) {
         Specification<FieldOfStudyEntity> spec = withCriteria(criteria.getNameLike(), criteria.getDescriptionContain(), criteria.getApproved());
-        var sorting = Sort.by(Sort.Direction.fromString(
-                        criteria.getSorting().getDirection() != null ?  criteria.getSorting().getDirection().name() : "ASC"),
-                criteria.getSorting().getSortBy() != null && !criteria.getSorting().getSortBy().isBlank() ? criteria.getSorting().getSortBy() : "id"
-            );
-        var pageRequest = PageRequest.of(criteria.getPage(), criteria.getSize(), sorting);
+        var pageRequest = PageRequest.of(criteria.getPage(), criteria.getSize(), SortingUtils.getSort(criteria.getSorting()));
         Page<FieldOfStudyEntity> entityPage = jpaFieldOfStudyRepository.findAll(spec,pageRequest);
 
         return fieldOfStudyMapper.toDomainPage(entityPage);

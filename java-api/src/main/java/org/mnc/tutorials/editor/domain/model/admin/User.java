@@ -1,4 +1,6 @@
-package org.mnc.tutorials.editor.domain.model;
+package org.mnc.tutorials.editor.domain.model.admin;
+
+import org.mnc.tutorials.editor.domain.model.tutorial.FieldOfStudy;
 
 import java.util.List;
 import java.util.Locale;

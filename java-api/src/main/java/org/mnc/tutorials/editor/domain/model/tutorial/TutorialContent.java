@@ -1,4 +1,4 @@
-package org.mnc.tutorials.editor.domain.model;
+package org.mnc.tutorials.editor.domain.model.tutorial;
 
 import java.util.List;
 

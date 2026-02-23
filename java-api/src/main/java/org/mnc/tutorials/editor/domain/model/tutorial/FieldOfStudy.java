@@ -1,4 +1,6 @@
-package org.mnc.tutorials.editor.domain.model;
+package org.mnc.tutorials.editor.domain.model.tutorial;
+
+import org.mnc.tutorials.editor.domain.model.Domain;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

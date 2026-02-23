@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mnc.tutorials.editor.domain.model.DomainPage;
-import org.mnc.tutorials.editor.domain.model.FieldOfStudy;
+import org.mnc.tutorials.editor.domain.model.tutorial.FieldOfStudy;
 import org.mnc.tutorials.editor.domain.repository.FieldOfStudyCriteria;
 import org.mnc.tutorials.editor.domain.repository.FieldOfStudyRepository;
 

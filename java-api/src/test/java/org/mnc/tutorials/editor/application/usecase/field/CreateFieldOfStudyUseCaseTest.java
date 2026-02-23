@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mnc.tutorials.editor.application.dto.FieldOfStudyDto;
 import org.mnc.tutorials.editor.application.utils.AlreadyExistsException;
-import org.mnc.tutorials.editor.domain.model.FieldOfStudy;
+import org.mnc.tutorials.editor.domain.model.tutorial.FieldOfStudy;
 import org.mnc.tutorials.editor.domain.repository.FieldOfStudyRepository;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
