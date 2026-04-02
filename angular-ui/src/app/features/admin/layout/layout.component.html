@@ -1,0 +1,72 @@
+<div class="flex h-screen bg-slate-50 font-sans text-slate-900 overflow-hidden">
+
+  <aside
+    [class.w-64]="isSidebarOpen"
+    [class.w-20]="!isSidebarOpen"
+    class="bg-slate-900 text-white flex flex-col transition-all duration-300 ease-in-out z-20">
+
+    <div class="h-16 flex items-center px-6 border-b border-slate-800 shrink-0">
+      <div class="w-8 h-8 bg-indigo-500 rounded-lg flex-shrink-0"></div>
+      <span *ngIf="isSidebarOpen" class="ml-3 font-bold text-lg tracking-tight">MNC Admin</span>
+    </div>
+
+    <nav class="flex-1 py-6 px-3 space-y-1 overflow-y-auto">
+      <a routerLink="/admin/dashboard" routerLinkActive="bg-slate-800 text-white"
+         class=" cursor-pointer flex items-center p-3 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">
+        <span class="material-icons">dashboard</span>
+        <span *ngIf="isSidebarOpen" class="ml-3">Dashboard</span>
+      </a>
+
+      <div *ngIf="isSidebarOpen" class="px-3 pt-4 pb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+        System Config
+      </div>
+
+      <a routerLink="/admin/parameters" routerLinkActive="bg-slate-800 text-white"
+         class="cursor-pointer flex items-center p-3 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">
+        <span class="material-icons">settings</span>
+        <span *ngIf="isSidebarOpen" class="ml-3">App Parameters</span>
+      </a>
+
+      <a routerLink="/admin/fos" routerLinkActive="bg-slate-800 text-white"
+         class="cursor-pointer flex items-center p-3 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">
+        <span class="material-icons">school</span>
+        <span *ngIf="isSidebarOpen" class="ml-3">Fields of Study</span>
+      </a>
+    </nav>
+
+    <div class="p-4 border-t border-slate-800">
+      <button class=" cursor-pointer flex items-center text-slate-400 hover:text-white w-full">
+        <span class="material-icons">logout</span>
+        <span *ngIf="isSidebarOpen" class="ml-3 text-sm">Sign Out</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+
+    <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 z-10">
+      <div class="flex items-center gap-4">
+        <button (click)="toggleSidebar()" class="cursor-pointer text-slate-500 hover:bg-slate-100 p-2 rounded-md">
+          <span class="material-icons">menu</span>
+        </button>
+        <h1 class="text-xl font-semibold text-slate-800">Control Panel</h1>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div class="text-right hidden sm:block">
+          <p class="text-sm font-medium text-slate-900">Administrator</p>
+          <p class="text-xs text-slate-500">Super User</p>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-slate-200 border border-slate-300 flex items-center justify-center overflow-hidden">
+          <span class="material-icons text-slate-400">person</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 overflow-x-hidden overflow-y-auto p-8">
+      <div class="max-w-7xl mx-auto">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>

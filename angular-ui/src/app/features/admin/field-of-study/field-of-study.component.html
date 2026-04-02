@@ -1,0 +1,16 @@
+<div class="max-w-7xl mx-auto p-6">
+
+  <app-search-bar
+    (addClicked)="addFieldToForm()"
+    (searchChanged)="onSearch($event)">
+  </app-search-bar>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <app-card-editor
+      *ngFor="let group of fieldsArray.controls; let i = index"
+      [fieldGroup]="$any(group)"
+      (save)="saveField(i)">
+    </app-card-editor>
+  </div>
+
+</div>
