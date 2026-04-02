@@ -1,13 +1,12 @@
 package org.mnc.tutorials.editor.infrastructure.persistence.adapter;
 
 import org.mnc.tutorials.editor.domain.model.admin.AppParameter;
-import org.mnc.tutorials.editor.domain.model.tutorial.FieldOfStudy;
+import org.mnc.tutorials.editor.domain.model.admin.AppParameterKey;
 import org.mnc.tutorials.editor.domain.repository.AppParameterRepository;
 import org.mnc.tutorials.editor.domain.repository.SortCriteria;
 import org.mnc.tutorials.editor.infrastructure.persistence.entity.AppParameterEntity;
 import org.mnc.tutorials.editor.infrastructure.persistence.jpa.JpaAppParameterRepository;
-import org.mnc.tutorials.editor.infrastructure.persistence.mapper.AppParameterMapper;
-import org.springframework.data.domain.Sort;
+import org.mnc.tutorials.editor.infrastructure.persistence.mapping.AppParameterMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -31,8 +30,8 @@ public class AppParameterRepositoryAdapter implements AppParameterRepository {
     }
 
     @Override
-    public Optional<AppParameter> findByKey(String key) {
-        return jpaAppParameterRepository.findByKeyIgnoreCase(key)
+    public Optional<AppParameter> findByKey(AppParameterKey key) {
+        return jpaAppParameterRepository.findByKey(key)
                 .map(appParameterMapper::toDomain);
     }
 
@@ -44,7 +43,7 @@ public class AppParameterRepositoryAdapter implements AppParameterRepository {
     }
 
     @Override
-    public void deleteByKey(String key) {
-        jpaAppParameterRepository.deleteByKeyIgnoreCase(key);
+    public void deleteByKey(AppParameterKey key) {
+        jpaAppParameterRepository.deleteByKey(key);
     }
 }

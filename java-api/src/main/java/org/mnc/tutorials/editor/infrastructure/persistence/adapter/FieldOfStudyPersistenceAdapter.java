@@ -1,16 +1,16 @@
 package org.mnc.tutorials.editor.infrastructure.persistence.adapter;
 
 import jakarta.persistence.criteria.Predicate;
+import lombok.RequiredArgsConstructor;
 import org.mnc.tutorials.editor.domain.model.DomainPage;
 import org.mnc.tutorials.editor.domain.model.tutorial.FieldOfStudy;
 import org.mnc.tutorials.editor.domain.repository.FieldOfStudyCriteria;
 import org.mnc.tutorials.editor.domain.repository.FieldOfStudyRepository;
 import org.mnc.tutorials.editor.infrastructure.persistence.entity.FieldOfStudyEntity;
 import org.mnc.tutorials.editor.infrastructure.persistence.jpa.JpaFieldOfStudyRepository;
-import org.mnc.tutorials.editor.infrastructure.persistence.mapper.FieldOfStudyMapper;
+import org.mnc.tutorials.editor.infrastructure.persistence.mapping.FieldOfStudyMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -20,19 +20,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class FieldOfStudyPersistenceAdapter implements FieldOfStudyRepository {
 
     private final JpaFieldOfStudyRepository jpaFieldOfStudyRepository;
     private final FieldOfStudyMapper fieldOfStudyMapper;
 
-    public FieldOfStudyPersistenceAdapter(JpaFieldOfStudyRepository jpaFieldOfStudyRepository, FieldOfStudyMapper fieldOfStudyMapper) {
-        this.jpaFieldOfStudyRepository = jpaFieldOfStudyRepository;
-        this.fieldOfStudyMapper = fieldOfStudyMapper;
-    }
-
     @Override
     public FieldOfStudy save(FieldOfStudy fieldOfStudy) {
-        FieldOfStudyEntity entity = jpaFieldOfStudyRepository.save(fieldOfStudyMapper.fromDomain(fieldOfStudy));
+        FieldOfStudyEntity entity = jpaFieldOfStudyRepository.save(fieldOfStudyMapper.toEntity(fieldOfStudy));
         return fieldOfStudyMapper.toDomain(entity);
     }
 

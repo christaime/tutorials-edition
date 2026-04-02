@@ -2,10 +2,15 @@ package org.mnc.tutorials.editor.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.UUID;
 
 @Entity
 @Table(name = "fields_of_study")
+@Getter
+@Setter
 public class FieldOfStudyEntity extends BaseEntity {
 
     @Column(name = "name",nullable = false, length = 255, unique = true)
@@ -35,27 +40,4 @@ public class FieldOfStudyEntity extends BaseEntity {
         this.approved = approved;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isApproved() {
-        return approved;
-    }
-
-    public void setApproved(boolean approved) {
-        this.approved = approved;
-    }
 }

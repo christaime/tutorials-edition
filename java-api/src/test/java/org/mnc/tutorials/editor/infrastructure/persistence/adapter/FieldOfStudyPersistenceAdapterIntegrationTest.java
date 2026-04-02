@@ -5,17 +5,21 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import org.mnc.tutorials.editor.FlywayConfig;
 import org.mnc.tutorials.editor.domain.model.tutorial.FieldOfStudy;
 import org.mnc.tutorials.editor.domain.repository.FieldOfStudyCriteria;
 import org.mnc.tutorials.editor.domain.repository.SortCriteria;
+import org.mnc.tutorials.editor.infrastructure.mapping.MapStructFieldOfStudyDtoMapperImpl;
 import org.mnc.tutorials.editor.infrastructure.persistence.jpa.JpaFieldOfStudyRepository;
-import org.mnc.tutorials.editor.infrastructure.persistence.mapper.FieldOfStudyMapper;
+import org.mnc.tutorials.editor.infrastructure.persistence.mapping.FieldOfStudyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jdbc.test.autoconfigure.TestDatabaseAutoConfiguration;
 import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -30,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DataJpaTest(excludeAutoConfiguration = TestDatabaseAutoConfiguration.class)
 @Import({
         FieldOfStudyPersistenceAdapter.class,
-        FieldOfStudyMapper.class,
+        TestMapperConfig.class,
         FlywayConfig.class
 })
 @Testcontainers
@@ -150,5 +154,13 @@ public class FieldOfStudyPersistenceAdapterIntegrationTest {
     void delete_NonExistent_DoesNotThrow() {
         // JPA deleteById typically doesn't throw if ID is missing in modern Spring Boot
         persistenceAdapter.deleteById(UUID.randomUUID());
+    }
+}
+
+@TestConfiguration
+class TestMapperConfig {
+    @Bean
+    public FieldOfStudyMapper fieldOfStudyMapper() {
+        return Mappers.getMapper(FieldOfStudyMapper.class);
     }
 }

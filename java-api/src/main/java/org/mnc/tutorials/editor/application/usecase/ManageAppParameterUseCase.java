@@ -1,8 +1,10 @@
 package org.mnc.tutorials.editor.application.usecase;
 
+import org.mnc.tutorials.editor.application.dto.AppParameterDto;
 import org.mnc.tutorials.editor.application.mapper.AppParameterDtoMapper;
 import org.mnc.tutorials.editor.application.utils.NotFoundException;
 import org.mnc.tutorials.editor.domain.model.admin.AppParameter;
+import org.mnc.tutorials.editor.domain.model.admin.AppParameterKey;
 import org.mnc.tutorials.editor.domain.repository.AppParameterRepository;
 import org.mnc.tutorials.editor.domain.repository.SortCriteria;
 import org.springframework.stereotype.Service;
@@ -23,34 +25,36 @@ public class ManageAppParameterUseCase {
         this.mapper = mapper;
     }
 
-    public void setParameter(AppParameter parameter, UUID adminId) {
-        AppParameter param = repository.findByKey(parameter.getKey())
+    public AppParameterDto setParameter(AppParameterDto parameter, UUID adminId) {
+        AppParameter param = repository.findByKey(parameter.key())
         .map(p -> {
             mapper.update(p,parameter);
             return p;
         })
         .orElseGet(() -> {
-            parameter.setId(UUID.randomUUID());
-            parameter.setCreatedAt(LocalDateTime.now());
-            parameter.setCreatedBy(adminId);
-            return parameter;
+            var domainParam = mapper.toDomain(parameter);
+            domainParam.setId(UUID.randomUUID());
+            domainParam.setCreatedAt(LocalDateTime.now());
+            domainParam.setCreatedBy(adminId);
+            return domainParam;
         });
 
         param.setLastModificationBy(adminId);
         param.setLastModificationAt(LocalDateTime.now());
 
-        repository.save(param);
+        param = repository.save(param);
+        return mapper.toDto(param);
     }
 
-    public Optional<AppParameter> getParameter(String key) {
-        return repository.findByKey(key);
+    public Optional<AppParameterDto> getParameter(AppParameterKey  key) {
+        return repository.findByKey(key).map(mapper::toDto);
     }
 
-    public List<AppParameter> getParameterList(SortCriteria sorting) {
-        return repository.findAll(sorting);
+    public List<AppParameterDto> getParameterList(SortCriteria sorting) {
+        return repository.findAll(sorting).stream().map(mapper::toDto).toList();
     }
 
-    public void deleteParameter(String key) {
+    public void deleteParameter(AppParameterKey key) {
         repository.findByKey(key).orElseThrow(() -> new NotFoundException("Parameter not found"));
         repository.deleteByKey(key);
     }

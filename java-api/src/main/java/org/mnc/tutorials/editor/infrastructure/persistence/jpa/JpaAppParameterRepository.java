@@ -1,5 +1,6 @@
 package org.mnc.tutorials.editor.infrastructure.persistence.jpa;
 
+import org.mnc.tutorials.editor.domain.model.admin.AppParameterKey;
 import org.mnc.tutorials.editor.infrastructure.persistence.entity.AppParameterEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,9 +13,9 @@ import java.util.UUID;
 @Repository
 public interface JpaAppParameterRepository extends JpaRepository<AppParameterEntity, UUID> {
 
-    Optional<AppParameterEntity> findByKeyIgnoreCase(String key);
+    Optional<AppParameterEntity> findByKey(AppParameterKey key);
 
     @Modifying
     @Transactional
-    void deleteByKeyIgnoreCase(String key);
+    void deleteByKey(AppParameterKey key);
 }

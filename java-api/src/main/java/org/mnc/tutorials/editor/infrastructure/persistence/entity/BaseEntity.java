@@ -1,11 +1,15 @@
 package org.mnc.tutorials.editor.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @MappedSuperclass
+@Getter
+@Setter
 public abstract class BaseEntity {
 
     @Id
@@ -40,43 +44,4 @@ public abstract class BaseEntity {
         this.lastModificationBy = lastModificationBy;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public UUID getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(UUID createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public LocalDateTime getLastModificationAt() {
-        return lastModificationAt;
-    }
-
-    public void setLastModificationAt(LocalDateTime lastModificationAt) {
-        this.lastModificationAt = lastModificationAt;
-    }
-
-    public UUID getLastModificationBy() {
-        return lastModificationBy;
-    }
-
-    public void setLastModificationBy(UUID lastModificationBy) {
-        this.lastModificationBy = lastModificationBy;
-    }
 }

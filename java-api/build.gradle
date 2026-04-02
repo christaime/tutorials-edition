@@ -45,7 +45,22 @@ dependencies {
     implementation "org.flywaydb:flyway-database-postgresql:$flywayVersion"
 
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'org.mapstruct:mapstruct:1.6.0.Beta1'
 
+    // Spring Security core
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // OAuth2 Resource Server for JWT validation
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // MapStruct processor should come after Lombok
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.0.Beta1'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+    // Testing security (important for your unit tests)
+    testImplementation  'org.springframework.security:spring-security-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

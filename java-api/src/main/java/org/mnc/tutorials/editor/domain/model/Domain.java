@@ -13,6 +13,8 @@ public class Domain {
     protected LocalDateTime lastModificationAt;
     protected UUID lastModificationBy;
 
+    public Domain() { }
+
     public Domain(UUID createdBy) {
         this.id = UUID.randomUUID();
         this.createdAt = LocalDateTime.now();

@@ -8,8 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EnableJpaRepositories(basePackages = {
         "org.mnc.tutorials.editor.infrastructure.persistence.jpa"
-       /* "org.mnc.tutorials.editor.infrastructure.persistence.adapter",
-        "org.mnc.tutorials.editor.domain.repository"*/
 })
 @ComponentScan(basePackages = {
         "org.mnc.tutorials.editor"

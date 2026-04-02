@@ -6,22 +6,24 @@ import java.util.UUID;
 
 public class AppParameter extends Domain {
 
-    private String key;
+    private AppParameterKey key;
     private String value;
     private String description;
 
-    public AppParameter(UUID createdBy, String key, String value, String description) {
+    public AppParameter(){}
+
+    public AppParameter(UUID createdBy, AppParameterKey key, String value, String description) {
         super(createdBy);
         this.key = key;
         this.value = value;
         this.description = description;
     }
 
-    public String getKey() {
+    public AppParameterKey getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(AppParameterKey key) {
         this.key = key;
     }
 

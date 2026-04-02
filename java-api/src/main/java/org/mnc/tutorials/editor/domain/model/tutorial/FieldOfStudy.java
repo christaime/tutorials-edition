@@ -6,9 +6,12 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class FieldOfStudy extends Domain {
+
     private String name;
     private String description;
     private boolean approved;
+
+    public FieldOfStudy() { super(); }
 
     public FieldOfStudy(UUID createdBy,String name, String description, boolean approved) {
         super(createdBy);

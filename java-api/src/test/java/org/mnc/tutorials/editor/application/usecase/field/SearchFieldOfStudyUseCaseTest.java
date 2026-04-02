@@ -2,9 +2,14 @@ package org.mnc.tutorials.editor.application.usecase.field;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mnc.tutorials.editor.application.dto.FieldOfStudyDto;
+import org.mnc.tutorials.editor.application.dto.PageResult;
+import org.mnc.tutorials.editor.application.mapper.FieldOfStudyDtoMapper;
 import org.mnc.tutorials.editor.domain.repository.SortCriteria;
+import org.mnc.tutorials.editor.infrastructure.mapping.MapStructFieldOfStudyDtoMapperImpl;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mnc.tutorials.editor.domain.model.DomainPage;
 import org.mnc.tutorials.editor.domain.model.tutorial.FieldOfStudy;
@@ -27,6 +32,9 @@ class SearchFieldOfStudyUseCaseTest {
     @InjectMocks
     private SearchFieldOfStudyUseCase useCase;
 
+    @Spy
+    private FieldOfStudyDtoMapper mapper = new MapStructFieldOfStudyDtoMapperImpl();
+
     @Test
     void execute_ShouldReturnPagedResults_WhenCriteriaProvided() {
         // Arrange
@@ -42,12 +50,12 @@ class SearchFieldOfStudyUseCaseTest {
         when(repository.findByCriteria(criteria)).thenReturn(expectedPage);
 
         // Act
-        DomainPage<FieldOfStudy> result = useCase.execute(criteria);
+        PageResult<FieldOfStudyDto> result = useCase.execute(criteria);
 
         // Assert
         assertThat(result).isNotNull();
         assertThat(result.content()).hasSize(1);
-        assertThat(result.content().get(0).getName()).isEqualTo("Java");
+        assertThat(result.content().get(0).name()).isEqualTo("Java");
 
         // Verify the repository was called exactly once with our criteria
         verify(repository, times(1)).findByCriteria(criteria);
@@ -62,7 +70,7 @@ class SearchFieldOfStudyUseCaseTest {
         when(repository.findByCriteria(any())).thenReturn(emptyPage);
 
         // Act
-        DomainPage<FieldOfStudy> result = useCase.execute(criteria);
+        var result = useCase.execute(criteria);
 
         // Assert
         assertThat(result.content()).isEmpty();

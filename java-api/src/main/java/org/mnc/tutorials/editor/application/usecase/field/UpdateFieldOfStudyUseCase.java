@@ -13,14 +13,14 @@ import java.util.UUID;
 public class UpdateFieldOfStudyUseCase {
 
     private final FieldOfStudyRepository repository;
-    private final FieldOfStudyDtoMapper fieldOfStudyDtoMapper;
+    private final FieldOfStudyDtoMapper mapper;
 
-    public UpdateFieldOfStudyUseCase(FieldOfStudyRepository repository, FieldOfStudyDtoMapper fieldOfStudyDtoMapper) {
+    public UpdateFieldOfStudyUseCase(FieldOfStudyRepository repository, FieldOfStudyDtoMapper mapper) {
         this.repository = repository;
-        this.fieldOfStudyDtoMapper = fieldOfStudyDtoMapper;
+        this.mapper = mapper;
     }
 
-    public FieldOfStudy execute(UUID id, FieldOfStudyDto dto, UUID modifierId) {
+    public FieldOfStudyDto execute(UUID id, FieldOfStudyDto dto, UUID modifierId) {
         FieldOfStudy existing = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Field not found"));
 
@@ -29,8 +29,10 @@ public class UpdateFieldOfStudyUseCase {
             throw new IllegalStateException("Cannot update an approved Field of Study.");
         }
 
-        fieldOfStudyDtoMapper.updateDomain(existing,dto,modifierId);
+        mapper.updateDomain(existing,dto,modifierId);
 
-        return repository.save(existing);
+        existing = repository.save(existing);
+
+        return mapper.toDto(existing);
     }
 }
