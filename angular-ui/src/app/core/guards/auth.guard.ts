@@ -1,45 +1,51 @@
-import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router
-} from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { inject } from '@angular/core';
+import { AuthGuardData, createAuthGuard } from 'keycloak-angular';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router) {}
+const isAccessAllowed = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot, authData: AuthGuardData): Promise<boolean | UrlTree> => {
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
+  const router = inject(Router);
+  const { authenticated, grantedRoles, keycloak } = authData;
 
-    // 1. Check Authentication
-    if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']);
-      return false;
-    }
-
-    // 2. Check Roles (if specified in the route data)
-    const requiredRoles = route.data['roles'] as Array<string>;
-
-    if (!requiredRoles || requiredRoles.length === 0) {
-      return true; // No specific role required for this route
-    }
-
-    const userHasRole = requiredRoles.some(role => this.authService.hasRole(role));
-
-    if (userHasRole) {
-      return true;
-    } else {
-      // User is logged in but doesn't have the right permissions
-      this.router.navigate(['/unauthorized']);
-      return false;
-    }
+  // 1. Check if user is logged in
+  if (!authenticated) {
+    await keycloak.login({
+      redirectUri: window.location.origin + state.url
+    });
+    return false;
   }
-}
+
+  // 2. Check for required roles from route data
+  const requiredRoles = route.data['roles'] as string[];
+  const strategy = route.data['strategy'] || 'any';
+
+  // If no specific roles are required, allow access
+  if (!requiredRoles || requiredRoles.length === 0) {
+    return true;
+  }
+
+  // 3. Apply the Strategy
+  let hasAccess = false;
+
+  if (strategy === 'all') {
+    // AND logic: Every required role must be in the user's realmRoles
+    hasAccess = requiredRoles.every(role => 
+      grantedRoles.realmRoles.includes(role)
+    );
+  } else {
+    // OR logic: At least one required role must be present
+    hasAccess = requiredRoles.some(role => 
+      grantedRoles.realmRoles.includes(role)
+    );
+  }
+
+  if (!hasAccess) {
+    return router.parseUrl('/unauthorized');
+  }
+
+  return true;
+};
+
+
+export const AuthGuard = createAuthGuard<CanActivateFn>(isAccessAllowed);

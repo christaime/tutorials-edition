@@ -7,12 +7,11 @@ export const adminRoutes: Routes = [
   { path: 'admin',
       component: LayoutComponent,
       canActivate: [AuthGuard],
-      data: { roles: ['ROLE_ADMIN'] },
       children: [
           { path: 'field-of-study',
               component: FieldOfStudyComponent,
               canActivate: [AuthGuard],
-              data: { roles: ['ROLE_ADMIN'] }
+              data: { roles: ['ADMIN','USER'] , strategy: "any"}
           }
       ]
   }

@@ -1,21 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Injector } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { KeycloakService } from 'keycloak-angular';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  constructor(private injector: Injector) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // For now, we mock the user ID.
-    // Later, this will come from your Keycloak/Auth service.
-    const userId = 'f47ac10b-58cc-4372-a567-0e02b2c3d479';
-
-    const authReq = req.clone({
-      setHeaders: {
-        'X-User-Id': userId
-      }
-    });
-
-    return next.handle(authReq);
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+     const keycloak = this.injector.get(KeycloakService);
+     return from(keycloak.getToken()).pipe(
+       mergeMap(token => {
+         if (token) {
+           const authReq = request.clone({
+             setHeaders: {
+               Authorization: `Bearer ${token}`
+             }
+           });
+           return next.handle(authReq);
+         }
+         return next.handle(request);
+       })
+     );
   }
 }
