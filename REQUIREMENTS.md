@@ -36,15 +36,15 @@ The global deadline for the delivery of the first version of the project is 07/3
 
 Tutorial Editor should be able to:
 
-1 - Manage users of the platform, their identification/authentification and autorisations
+#### a - Manage users of the platform, their identification/authentification and autorisations
  Initials admin/moderator users (at least one) should be created in the system. They whould have the responsability to manage the fields of study accepted on the platform, suspend or banned users if necessary. Be informed of any complain made about the activity on the platform.
 
  Users should be able to register for an account on the platform, and access it after verifying their identity via email. During the registration process, they should be able to mention fields of studies they are willing to share about, fields of studies which could be unexisting in the system. User should also be able, once their account creates, define the fields they are open to mentor other peoples on and how many simultaneous mentorship they can manage at most.
 
-2 - Manage types of fields of study.
+#### b - Manage types of fields of study.
  Althought fields of study would be created by users, it will be the responsability of admin users to check it and approuve it for a global use in the system. Fields unapproved will only be visible by the user who created it and have an expiration time (parameter define in the system).
 
-3 - Manage articles edition
+#### c - Manage articles edition
  Users with active account will have the possibility to writte draft of tutorials on the platform. Once they finished with it, they will link it to some fields of studies (the max number of fields possibily linked to an article will be parameterized in the system). The process of mentoring will then start with them submitting a request to other users to share they thoughts about what they have written.
  A list of availables mentors would be presented to users with the number of articles they approved and lik to those articles if they already have been published.
  The user will then select a number of users (max number of mentor to which the request can be sent will be a parameter) to whom a request of mentorship will be sent.
@@ -59,57 +59,176 @@ Tutorial Editor should be able to:
  The user has the liberty to close his article, ending by this all activities on it. The article will be tagged as ready to publish by the system as soon as the required amount of mentor(parameterized in the system) have approved it.
 
 
-4 - Accept/reject a 'Review article' request made by another user.
+#### d - Accept/reject a 'Review article' request made by another user.
  Once having an account on the platform with fields of study interrest to mentorship specified, a user will receive request from other user to review articles.
  If it suite him, he will accept or reject the request. A rejection should always have a comment for an explanation to the other party.
 
-5 - Articles publication management.
+#### e - Articles publication management.
  For all articles ready to publish, the user will have the possibility to publish them and they will appear in the articles blogs page.
  A public side of the application (accessible by unregistered user) will give the possibility to users to show case their article for a certain amount of time.
  Registered and unregistered user will have the possibility to rate them. The more an article is appreciated, the more it is likely to stay longer visible (not archive) on the public page.
  A user will also be able to put the link to his article published on other platforms.
 
-5 - Moderation on the platform.
+#### f - Moderation on the platform.
  A user can writte a complaint about a fake or inapropriate article to review. After examination of the complaint by moderators, actions like suspension of a user account can be made.
 
-6 - Browser between articles published and visible by everyone.
+#### g - Browser between articles published and visible by everyone.
 The 'Tutorials' page should give the possibility to user to research article by 'Author', 'Field of study', 'Date of publication'. It will be possible to sort by date of publication or by rate.
 The articles corresponding to his filters will be shown to him and he will have the liberty to click on the one he want to see it.
 
+#### h - Content Monetization & Revenue Distribution
+ - The platform identifies high-value content based on engagement metrics (traffic, ratings, and completion rates) to initiate a monetization process.
+ - Monetization Opt-in: Authors of high-performing tutorials are invited to monetize their work. The platform provides tiered pricing recommendations to ensure market competitiveness.
+ - Access Control: Upon agreement, the tutorial transitions from "Open Access" to "Premium," requiring a one-time purchase for user access.
+ - Automated Revenue Sharing: The sale agreement includes a predefined distribution model. Revenue is automatically split between the primary author, the platform, and any designated contributors or validators.
+ - Payout Execution: Disbursement to all beneficiaries is handled asynchronously according to their configured payment profiles (e.g., International Credit Card/Bank Transfer).
 
 ### 2.3. Project Objectives (Functional and Non-Functional)
 * **Functional Objectives:** 
  - User management,
  - Tutorial edition and publication management.
+ - Tutorial Monetization
 
-* **Non-Functional Objectives:** 
- - Security of users personnal datas and articles(accessibility control and backkup). 
- - High availability of the platform (Prevention of DDos).
+### 2.4. Non-Functional Objectives
 
-### 2.4. Added Value and Expected Benefits
-* Allow people to work together in order to share some skill with other, with the confidence that it is a well known and approve practice.
+- **Data Privacy & Security:** - **Identity & Access Management (IAM):** Strict enforcement of Role-Based Access Control (RBAC) via OpenID Connect (OIDC), ensuring that tutorial content and user data are accessible only to authorized entities.
+    - **Data Persistence & Integrity:** Implementation of automated backup strategies and "Point-in-Time Recovery" (PITR) to prevent data loss and ensure long-term durability of published intellectual property.
+    - **Encryption:** Encryption of sensitive data at rest and in transit (TLS 1.3) to safeguard user privacy.
 
+- **Platform Availability & Resilience:**
+    - **High Availability (HA):** Architectural design focused on zero-single-point-of-failure to ensure the platform remains accessible to global users 24/7.
+    - **Infrastructure Hardening:** Mitigation of Distributed Denial of Service (DDoS) attacks and brute-force attempts through network-level rate limiting, firewall optimization (UFW), and automated intrusion detection (e.g., Fail2Ban/Rkhunter).
+    - **Performance Optimization:** Use of reactive programming patterns (Angular Signals) and efficient database indexing to maintain low latency even under heavy concurrent loads.
 
-### 2.5. Project Scope (Inclusions and Exclusions)
+### 2.5. Added Value and Expected Benefits
+ - **Collaborative Knowledge Engineering:** Enable experts to co-author content through a structured workflow. This ensures that shared skills are not just documented but are validated and approved by peers, fostering a high level of trust and technical accuracy.
+ - **Knowledge-to-Asset Transformation:** Provide a clear pathway to transform high-value intellectual property into a sustainable revenue stream through automated monetization and professional content distribution.
+
+### 2.6. Project Scope (Inclusions and Exclusions)
 * **Inclusions:** All the functionality mentionned in this document in the project description should be implemented.
 * **Exclusions:** Non functional requirement about backup and availability of the service will be excluded for the moment.
 
+### 2.7. Global System Configuration & Governance
+
+To ensure platform stability, content quality, and resource management, the following global parameters are managed by the System Administrator. These values dictate the behavioral logic of the platform's microservices.
+
+| Parameter Key | Type | Description |
+| :--- | :--- | :--- |
+| `AUTH_REGISTRATION_ENABLED` | Boolean | Toggles the public registration form. If disabled, new users can only join via invitation or manual admin creation. |
+| `MAINTENANCE_MODE` | Boolean | When enabled, all non-admin traffic is redirected to a "System Maintenance" landing page. |
+| `TUTORIAL_PUBLISH_AUTO_APPROVE` | Boolean | If False, all tutorials submitted for publication enter a "Pending Review" queue for manual Admin/Validator approval. |
+| `TUTORIAL_MAX_PER_USER` | Integer | Limits the number of "Draft" tutorials a single user can maintain to prevent database clutter and resource abuse. |
+| `MENTOR_MAX_SIMULTANEOUS_TUTORIALS` | Integer | Restricts the number of active mentorship/validation assignments a user can hold to ensure high-quality feedback. |
+| `INVITE_DAILY_LIMIT_PER_USER` | Integer | Anti-spam measure: Maximum number of community invitations a user can dispatch within a 24-hour window. |
+| `INVITE_COOLDOWN_PER_RECIPIENT` | Integer (Days) | Prevents harassment by limiting how often the same email address can be targeted for an invitation. |
+| `INVITE_GLOBAL_HOURLY_CAP` | Integer | Protects SMTP reputation by capping total platform-wide invitation emails sent per hour. |
+| `MONETIZATION_MIN_TRAFFIC_THRESHOLD` | Integer | (Proposed) The minimum number of views a tutorial must reach before the "Monetization Opt-in" becomes available to the author. |
+| `MENTOR_MAX_TOPICS_PER_USER` | Integer | Limits how many specific domains a user can claim expertise in. |
+| `TUTORIAL_MAX_MENTORS` | Integer | Maximum number of mentors allowed per specific tutorial project. |
+| `UNVALIDATED_PUBLISH_LIMIT` | Integer | Max number of tutorials a user can publish without peer-validation. |
+| `AI_SAFETY_CHECK_ENABLED` | Boolean | Toggle for the automated coherence and "Harmful Content" AI check. |
+
+---
+**Implementation Note:** These parameters should be retrieved by the Frontend at startup (via a Configuration API) to dynamically adjust the UI (e.g., hiding the "Invite" button or the "Register" link).
 ---
 
 ## 3. Functional Specifications
 
-### 3.1. Use Cases / User Stories
-* Detailed description of the interactions between users and the system to achieve specific goals.
-* For each use case:
-    * **Use Case Name:** Clear and descriptive title.
-    * **Primary Actor:** The user or system that initiates the action.
-    * **Preconditions:** The state of the system before the execution of the use case.
-    * **Nominal Flow:** The normal sequence of steps.
-    * **Alternative Flows:** The possible paths in case of different conditions.
-    * **Exceptions / Errors:** Abnormal situations and how the system should handle them.
-    * **Postconditions:** The state of the system after the execution of the use case.
-    * **Priority:** (High, Medium, Low) - Importance of this functionality.
+### 3.1. Use Case Catalog
+
+The following use cases define the functional scope of the platform, categorized by their domain of influence.
+
+#### **Module: Authentication & Identity**
+- **UC01: User Login/Logout (OIDC):** Standard authentication flow via Keycloak.
+- **UC02: Profile Management:** Managing user settings, including payment profiles.
+- **UC11: Invite Friend to the Community:** Sending secure, personalized invitations to external users.
+- **UC12: Community Registration:** New users joining the platform via an invitation or public link.
+
+#### **Module: Content Authoring (The Editor)**
+- **UC03: Create and Structure Tutorial (Draft):** Initializing a new tutorial and its hierarchical structure.
+- **UC04: Manage Chapters and Steps:** Organizing the sequence and nesting of learning content.
+- **UC05: Content Edition (Markdown/Media):** Writing the actual technical content with code snippets and images.
+- **UC13: Collaboration Assignment:** Author assigning a registered user as a Contributor or Validator for a specific tutorial (In-app).
+
+#### **Module: Quality Control & Publishing**
+- **UC06: Submit for Validation:** Transitioning a tutorial from "Draft" to "In Review."
+- **UC07: Review & Peer Approval:** The process of a Validator or Admin approving or rejecting a tutorial for publication.
+- **UC14: Live Update/Version Control:** Handling modifications to already published content.
+
+#### **Module: Monetization & Revenue**
+- **UC08: Opt-in for Content Monetization:** High-performing authors transitioning their work to a "Premium" status.
+- **UC09: Purchase Premium Access:** Learners purchasing access to tutorials via international credit cards.
+- **UC10: Revenue Distribution:** Automated calculation and tracking of earnings for authors, contributors, and the platform.
+
+#### **Module: System Administration**
+- **UC15: Manage Global Parameters:** Adjusting rate limits, maintenance mode, and auto-approval toggles.
+- **UC16: Audit Log Monitoring:** Reviewing system logs for spam detection or security incidents.
+
+#### Use Case UC11: Invite Friend to the Community
+
+* **Use Case Name:** Invite Friend to the Community
+* **Primary Actor:** Authenticated User
+* **Preconditions:** * User has a verified account.
+    * User has not exceeded `INVITE_DAILY_LIMIT_PER_USER`.
+* **Nominal Flow:**
+    1.  User triggers the invitation form and enters the recipient's email.
+    2.  System checks the local `AuditLog` for `INVITE_COOLDOWN_PER_RECIPIENT`.
+    3.  System queries Keycloak to verify if the email is already registered.
+    4.  **Condition: Not Registered & Within Limits:**
+        - System records the invitation attempt.
+        - System dispatches a personalized email via the platform's mail service.
+        - System displays a "Success" notification.
+* **Alternative Flows:**
+    * **User Already Member:** System denies the email dispatch and informs the sender: "This expert is already part of our community!"
+    * **Limit Reached:** System disables the "Send" button and informs the user when their limit will reset.
+* **Exceptions / Errors:**
+    * **E1: SMTP Reputation Protection:** If the global `INVITE_GLOBAL_HOURLY_CAP` is reached, invitations are queued or delayed to prevent being flagged as spam by external providers (Gmail, Outlook).
+* **Postconditions:**
+    * The platform's outgoing mail reputation is preserved.
+    * Community growth is tracked via secure, non-repetitive invitation logs.
+* **Priority:** Medium
 * (Optional) UML use case diagrams.
+
+
+### Use Case UC13: Request Project Mentorship
+
+* **Use Case Name:** Request Project Mentorship
+* **Primary Actor:** Content Author
+* **Preconditions:** * Tutorial is in "Draft" or "Pending Validation" status.
+    * Tutorial has an assigned "Topic."
+* **Nominal Flow:**
+    1. Author accesses the "Find a Mentor" dashboard.
+    2. System filters users who have marked themselves "Available for Mentorship" in that specific Topic.
+    3. System hides mentors who have reached `MENTOR_MAX_SIMULTANEOUS_TUTORIALS`.
+    4. Author reviews mentor metrics (Success rate, bio, language).
+    5. Author selects a mentor and clicks "Send Invitation."
+    6. System records a "Pending Invitation" in the database.
+    7. System sends an in-app notification to the Mentor.
+* **Exceptions / Errors:**
+    * **E1: Limit Reached:** System prevents the invitation if the tutorial already has the maximum allowed mentors (`TUTORIAL_MAX_MENTORS`).
+* **Postconditions:**
+    * An invitation is active; the tutorial status is locked to "Awaiting Response."
+* **Priority:** High
+
+### Use Case UC19: Respond to Mentorship Invitation
+
+* **Use Case Name:** Respond to Mentorship Invitation
+* **Primary Actor:** Potential Mentor
+* **Preconditions:** * Mentor has received an invitation for a specific tutorial (UC13).
+* **Nominal Flow (Acceptance):**
+    1. Mentor views the invitation and the tutorial summary.
+    2. Mentor clicks "Accept."
+    3. System updates the Tutorial role mapping to include this Mentor.
+    4. System notifies the Author.
+    5. Tutorial status changes to "Active Mentorship."
+* **Alternative Flow (Rejection):**
+    1. Mentor clicks "Decline."
+    2. System prompts for a "Reason for Rejection" (Optional text).
+    3. System records the rejection for mentor-matching analytics.
+    4. System notifies the Author and unlocks the "Find a Mentor" dashboard for them to try again.
+* **Postconditions:**
+    * The invitation is cleared. The system updates the Mentor's "Active Count" to ensure they don't exceed their global limit.
+* **Priority:** High
 
 ### 3.2. Business Rules
 * Description of the constraints, logic, and policies specific to the software's application domain.
